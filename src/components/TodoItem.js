@@ -3,7 +3,6 @@ import "./Components.css";
 
 const TodoItem = (props) => {
   const { completed, key, title, onDelete, onComplete } = props;
-
   return (
     <li className="todo-item" key={key}>
       <input

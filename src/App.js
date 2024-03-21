@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import TodoContainer from "./components/TodoContainer";
 import TodoItem from "./components/TodoItem";
 
 function App() {
+
+  useEffect(() => {
+    document.title = "To-Do";
+  }, []);
+
   // The state of the todo items.
   const [todoItems, setTodoItems] = useState([
     {
@@ -31,17 +36,34 @@ function App() {
 
   const addTodo = (title) => {
     const key = Date.now();
-    // TODO: Implement addTodo
+    //... deconstructs the prev list and then reassembles it with the new item
+    setTodoItems((prev) =>[...prev, {
+      key: key,
+      title: title,
+      completed: false,
+    }])
   };
 
   // The main app component
   return (
     <div className="App">
       <header className="header">
-        <h1>Todo List</h1>
+        <h1>My Todo List</h1>
       </header>
       <div className="body-container">
-        {/*TODO: Implement TodoContainer and TodoItem*/}
+        <TodoContainer name="My daily Tasks"addTodo={addTodo}>
+          {
+            todoItems.map((item) =>(
+              <TodoItem
+              title={item.title}
+              key={item.key}
+              completed={item.completed}
+              onDelete={() => deleteTodo(item.key)}
+              onComplete={() => completeTodo(item.key)}
+              />
+            ))
+          }
+        </TodoContainer>
       </div>
     </div>
   );
